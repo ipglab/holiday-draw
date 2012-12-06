@@ -8,7 +8,7 @@
 
   var img = new Image();
   img.onload = function() { setTimeout(function() { context.drawImage(img, 0, 0); }, 100); };
-  img.src = '/frosty/frost.png';
+  img.src = '/frosty/frost2.png';
 
   function eraseDot(x, y) {
     var gco = context.globalCompositeOperation;
@@ -56,10 +56,12 @@
   function resetCanvas() {
     canvas.width = canvas.width;
     context.drawImage(img, 0, 0);
+    if (timeoutId) { clearTimeout(timeoutId); }
   }
 
   canvas.addEventListener('mousedown', function(e) {
     erasing = true;
+    document.body.className = 'erasing';
     if (timeoutId) { clearTimeout(timeoutId); }
     eraseDot(e.x, e.y);
     lastPos = { x: e.x, y: e.y };
@@ -67,7 +69,8 @@
 
   canvas.addEventListener('mouseup', function(e) {
     erasing = false;
-    timeoutId = setTimeout(canvasTimeout, 2000);
+    document.body.className = '';
+    timeoutId = setTimeout(canvasTimeout, 5000);
   });
 
   canvas.addEventListener('mousemove', function(e) {
@@ -75,6 +78,26 @@
     if (!erasing) { return; }
     erasePath(e.x, e.y);
     lastPos = { x: e.x, y: e.y };
+  });
+
+  var captureIcon = document.getElementById('capture');
+  captureIcon.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    captureCanvas();
+  });
+  captureIcon.addEventListener('mousedown', function(e) {
+    e.stopPropagation();
+  });
+
+  var resetIcon = document.getElementById('reset');
+  resetIcon.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    resetCanvas();
+  });
+  resetIcon.addEventListener('mousedown', function(e) {
+    e.stopPropagation();
   });
 
 })();
