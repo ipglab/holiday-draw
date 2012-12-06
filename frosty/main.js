@@ -7,24 +7,8 @@
   var lastPos = false;
 
   var img = new Image();
-  img.onload = function() {
-    context.drawImage(img, 0, 0);
-  };
+  img.onload = function() { context.drawImage(img, 0, 0); };
   img.src = '/frosty/frost.png';
-
-  function eraseBlock(x, y) {
-    var imageData = context.getImageData(x - 25, y - 25, 50, 50);
-    var data = imageData.data;
-    var i = 0;
-    var length = data.length;
-    for (i = 0; i < length; i = i + 4) {
-      data[i + 0] = data[i + 0]; // red
-      data[i + 1] = data[i + 1]; // green
-      data[i + 2] = data[i + 2]; // blue
-      data[i + 3] = 120; // alpha
-    }
-    context.putImageData(imageData, x - 25, y - 25);
-  }
 
   function eraseDot(x, y) {
     var gco = context.globalCompositeOperation;
