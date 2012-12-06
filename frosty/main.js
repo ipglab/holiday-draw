@@ -53,22 +53,20 @@ function erasePath(x, y) {
   context.globalCompositeOperation = gco;
 }
 
+function canvasTimeout() {
+  captureCanvas();
+  resetCanvas();
+}
+
 function captureCanvas() {
-  /*
-  var opts = {
+  reqwest({
     url: '/frosty/save.php',
     method: 'POST',
     type: 'json',
     data: { uri: canvas.toDataURL('image/png') },
     success: function(resp) { console.log('saved', resp); },
     error: function(err) { console.log(err); }
-  };
-  reqwest(opts);
-  */
-  $.post('/frosty/save.php', { uri: canvas.toDataURL('image/png') }, function(resp) {
-    console.log('saved', resp);
-  }, 'json');
-  resetCanvas();
+  });
 }
 
 function resetCanvas() {
@@ -85,7 +83,7 @@ canvas.addEventListener('mousedown', function(e) {
 
 canvas.addEventListener('mouseup', function(e) {
   erasing = false;
-  timeoutId = setTimeout(captureCanvas, 2000);
+  timeoutId = setTimeout(canvasTimeout, 2000);
 });
 
 canvas.addEventListener('mousemove', function(e) {
