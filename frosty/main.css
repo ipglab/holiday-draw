@@ -6,3 +6,6 @@ html, body, div, canvas { margin: 0; border: 0; padding: 0; }
 }
 #bg { position: absolute; top: 0; left: 0; }
 #frosty { display: block; position: relative; z-index: 2; /*cursor: none;*/ }
+.icon { display: block; position: absolute; bottom: 75px; z-index: 2; width: 75px; height: 75px; }
+#reset { left: 75px; background: url(icon-refresh.png) no-repeat center; }
+#capture { left: 225px; background: url(icon-capture.png) no-repeat center; }

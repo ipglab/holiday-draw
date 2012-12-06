@@ -7,7 +7,7 @@
   var lastPos = false;
 
   var img = new Image();
-  img.onload = function() { context.drawImage(img, 0, 0); };
+  img.onload = function() { setTimeout(function() { context.drawImage(img, 0, 0); }, 100); };
   img.src = '/frosty/frost.png';
 
   function eraseDot(x, y) {
