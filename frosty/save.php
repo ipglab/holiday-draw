@@ -11,12 +11,17 @@ for ($i = 0; $i < ceil(strlen($encoded)/256); $i++) {
 }
 */
 
-$fn = 'images/' . time() . '.png';
+$fn = $_SERVER['DOCUMENT_ROOT'] . '/frosty/images/' . time() . '.png';
 if (!file_exists($fn)) {
   $fh = fopen($fn, 'wb');
   fwrite($fh, $decoded);
   fclose($fh);
 }
 
+$status = 200;
+if (!file_exists($fn)) {
+  $status = 500;
+}
+
 header('Content-Type: application/json');
-echo json_encode(array('status' => 200, 'path' => $fn));
+echo json_encode(array('status' => $status, 'path' => $fn));
