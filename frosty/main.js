@@ -14,7 +14,7 @@
     var gco = context.globalCompositeOperation;
     context.globalCompositeOperation = 'destination-out';
     context.beginPath();
-    context.arc(x, y, 5, 0, Math.PI * 2, false);
+    context.arc(x, y, 8, 0, Math.PI * 2, false);
     context.fillStyle = 'rgba(0,0,0,0.9)';
     context.fill();
     context.closePath();
@@ -26,7 +26,7 @@
     context.globalCompositeOperation = 'destination-out';
     context.beginPath();
     context.lineStyle = 'rgba(0,0,0,0.9)';
-    context.lineWidth = 10;
+    context.lineWidth = 16;
     context.lineCap = 'round';
     if (lastPos) {
       context.moveTo(lastPos.x, lastPos.y);
@@ -73,7 +73,6 @@
   canvas.addEventListener('mousemove', function(e) {
     e.preventDefault();
     if (!erasing) { return; }
-    eraseDot(e.x, e.y);
     erasePath(e.x, e.y);
     lastPos = { x: e.x, y: e.y };
   });
