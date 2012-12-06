@@ -59,26 +59,45 @@
     if (timeoutId) { clearTimeout(timeoutId); }
   }
 
-  canvas.addEventListener('mousedown', function(e) {
+  function getCoords(e) {
+    var x = e.x;
+    var y = e.y;
+    if (e.touches) {
+      x = e.touches[0].clientX;
+      y = e.touches[0].clientY;
+    }
+    return { x: x, y: y };
+  }
+
+  function startCapture(e) {
     erasing = true;
     document.body.className = 'erasing';
     if (timeoutId) { clearTimeout(timeoutId); }
-    eraseDot(e.x, e.y);
-    lastPos = { x: e.x, y: e.y };
-  });
+    var coords = getCoords(e);
+    eraseDot(coords.x, coords.y);
+    lastPos = { x: coords.x, y: coords.y };
+  }
 
-  canvas.addEventListener('mouseup', function(e) {
+  function stopCapture(e) {
     erasing = false;
     document.body.className = '';
-    timeoutId = setTimeout(canvasTimeout, 5000);
-  });
+    //timeoutId = setTimeout(canvasTimeout, 5000);
+  }
 
-  canvas.addEventListener('mousemove', function(e) {
+  function moving(e) {
     e.preventDefault();
     if (!erasing) { return; }
-    erasePath(e.x, e.y);
-    lastPos = { x: e.x, y: e.y };
-  });
+    var coords = getCoords(e);
+    erasePath(coords.x, coords.y);
+    lastPos = { x: coords.x, y: coords.y };
+  }
+
+  canvas.addEventListener('mousedown', startCapture);
+  canvas.addEventListener('touchstart', startCapture);
+  canvas.addEventListener('mouseup', stopCapture);
+  canvas.addEventListener('touchend', stopCapture);
+  canvas.addEventListener('mousemove', moving);
+  canvas.addEventListener('touchmove', moving);
 
   var captureIcon = document.getElementById('capture');
   captureIcon.addEventListener('click', function(e) {
